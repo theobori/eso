@@ -5,6 +5,7 @@
   pytestCheckHook,
   loguru,
   pydantic,
+  distutils,
 }:
 buildPythonPackage {
   pname = "eso";
@@ -20,6 +21,7 @@ buildPythonPackage {
   dependencies = [
     loguru
     pydantic
+    distutils
   ];
 
   nativeCheckInputs = [ pytestCheckHook ];

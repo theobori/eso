@@ -35,7 +35,7 @@
               ++ (with pkgs.python3Packages; [
                 pip
                 venvShellHook
-                setuptools
+                hatch
                 pytest
               ])
               ++ self.packages.${system}.default.dependencies;

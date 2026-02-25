@@ -1,13 +1,14 @@
 """The brainfuck interpreter module."""
 
 import operator
+import sys
 
 from typing import NoReturn, List, Callable, Optional
-from collections import deque
 
 from eso.esolang import EsolangMetadata
 from eso.esolangs.brainfuck.configuration import BrainfuckConfiguration
 from eso.exceptions import EsolangExecutionError
+from eso.esolangs.brainfuck.preprocessing import preprocessing
 
 
 class BrainfuckInterpreter:
@@ -27,7 +28,7 @@ class BrainfuckInterpreter:
         self.__memory: List[int] = [self.__c.empty_cell_value] * self.__c.memory_size
         self.__ptr = 0
         self.__pc = 0
-        self.__brackets = dict()
+        self.__brackets = preprocessing(program)
 
     def __ptr_move(self, rhs: int, op: Callable) -> int:
         """Move the memory pointer
@@ -78,22 +79,7 @@ class BrainfuckInterpreter:
         """
         return self.__ptr_move(1, operator.sub)
 
-    def __preprocessing(self) -> NoReturn:
-        """Preprocessing the matching brackets positions"""
-
-        st = deque()
-
-        for i, cell in enumerate(self.__program):
-            match cell:
-                case "[":
-                    st.append(i)
-                case "]":
-                    if st:
-                        l = st.pop()
-                        self.__brackets[l] = i
-                        self.__brackets[i] = l
-
-    def __eval(self) -> NoReturn:
+    def eval(self) -> NoReturn:
         """Evaluates the program without preprocessing"""
 
         while self.__pc < self.__program_len:
@@ -109,10 +95,8 @@ class BrainfuckInterpreter:
                 case ".":
                     print(chr(self.__memory[self.__ptr]), end="")
                 case ",":
-                    u = input("> ")
-                    self.__memory[self.__ptr] = (
-                        self.__c.empty_cell_value if u == "" else ord(u[0])
-                    )
+                    ch = ord(sys.stdin.read(1))
+                    self.__memory[self.__ptr] = 0 if ch == 10 else ch
                 case "[":
                     if self.__memory[self.__ptr] == 0:
                         self.__pc = self.__brackets[self.__pc]
@@ -121,9 +105,3 @@ class BrainfuckInterpreter:
                         self.__pc = self.__brackets[self.__pc]
 
             self.__pc += 1
-
-    def eval(self) -> NoReturn:
-        """Evaluates the program with preprocessing"""
-
-        self.__preprocessing()
-        self.__eval()

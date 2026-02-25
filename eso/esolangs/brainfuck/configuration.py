@@ -4,7 +4,8 @@ from pydantic import BaseModel, Field
 
 
 class BrainfuckConfiguration(BaseModel):
-    """This model represents a configuration for the Brainfuck esoteric language."""
+    """This model represents a configuration for the Brainfuck esoteric language.
+    It mainly configures parameters used while brainfuck is evaluated."""
 
     enable_memory_wrapping: bool = Field(
         title="Enable Memory Wrapping",
@@ -19,6 +20,8 @@ class BrainfuckConfiguration(BaseModel):
     memory_size: int = Field(
         title="The Memory Size",
         description="This is the value of the memory size",
+        lt=1_000_000 + 1,
+        gt=0xFF - 1,
         default=30_000,
     )
     empty_cell_value: int = Field(

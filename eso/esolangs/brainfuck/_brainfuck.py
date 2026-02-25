@@ -1,8 +1,10 @@
+from pathlib import Path
 from typing import NoReturn, Optional
 
 from eso.esolang import Esolang, EsolangMetadata
 from eso.esolangs.brainfuck.configuration import BrainfuckConfiguration
 from eso.esolangs.brainfuck.interpreter import BrainfuckInterpreter
+from eso.esolangs.brainfuck.compiler import compile
 
 
 class Brainfuck(Esolang):
@@ -24,5 +26,5 @@ class Brainfuck(Esolang):
         interpreter = BrainfuckInterpreter(program, self.__c, self.metadata)
         interpreter.eval()
 
-    def compile(self, program: str) -> NoReturn:
-        pass
+    def compile(self, program: str, destination_filepath: Path) -> NoReturn:
+        compile(program, destination_filepath, self.__c)

@@ -162,3 +162,4 @@ cython_debug/
 .vscode
 .direnv
 result
+eso_build

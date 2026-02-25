@@ -2,6 +2,7 @@
 
 from typing import NoReturn
 from abc import ABC, abstractmethod
+from pathlib import Path
 
 from eso.metadata import EsolangMetadata
 
@@ -20,9 +21,10 @@ class Esolang(ABC):
         """
 
     @abstractmethod
-    def compile(self, program: str) -> NoReturn:
+    def compile(self, program: str, destination_filepath: Path) -> NoReturn:
         """Compiles the given program.
 
         Args:
             program (str): The program.
+            destination_filepath (Path): The destination filepath of the compiled program.
         """

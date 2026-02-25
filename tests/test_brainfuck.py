@@ -1,8 +1,10 @@
 """The brainfuck test module."""
 
+from pathlib import Path
 import unittest
 import contextlib
 import io
+import os
 
 from eso import Brainfuck, BrainfuckConfiguration
 from eso.exceptions import EsolangExecutionError
@@ -54,6 +56,69 @@ Pointer :   ^
 INFINITE_ASCII_PROGRAM = "+[<+.>]"
 
 
+XMAS_TREE_PROGRAM = """[xmastree.b -- print Christmas tree
+(c) 2016 Daniel B. Cristofani
+http://brainfuck.org/]
+
+>>>--------<,[<[>++++++++++<-]>>[<------>>-<+],]++>>++<--[<++[+>]>+<<+++<]<
+<[>>+[[>>+<<-]<<]>>>>[[<<+>.>-]>>]<.<<<+<<-]>>[<.>--]>.>>.
+"""
+
+TIC_TAC_TOE_PROGRAM = """[tictactoe.b -- play tic-tac-toe
+(c) 2020 Daniel B. Cristofani
+http://brainfuck.org/
+This program is licensed under a Creative Commons Attribution-ShareAlike 4.0
+International License (http://creativecommons.org/licenses/by-sa/4.0/).]
+
+--->--->>>>->->->>>>>-->>>>>>>>>>>>>>>>>>+>>++++++++++[
+  <<++[
+    --<+<<+<<+>>>>[
+      >[<->>+++>>[-]+++<<<+[<++>>+<--]]+>+++++[>>+++++++++<<-]
+      >>++++.[-]>>+[<<<<+>>+>>-]<<<<<<[>+<-]<<
+    ]++++++++++.[-]>++
+  ]-->>[-->[-]>]<<[
+    >>--[
+      -[
+        -[
+          -----[>+>+++++++<<+]-->>-.----->,[<->-]<[[<]+[->>]<-]<[<<,[-]]>>>>
+        ]>
+      ]<[
+        >-[+<+++]+<+++[+[---->]+<<<<<<[>>]<[-]]
+        >[<+[---->]++[<]<[>]>[[>]+>+++++++++<<-[<]]]>[>>>>]
+      ]<[
+        -[[>+>+<<-]>[<+>-]++>+>>]<[<<++[-->>[-]]>[[-]>[<<+>>-]>]]
+      ]<[
+        [[<<]-[>>]<+<-]>[-<+]<<[<<]-<[>[+>>]>[>]>[-]]
+        >[[+>>]<-->>[>]+>>>]
+      ]<[
+        -[
+          --[+<<<<--[+>[-]>[<<+>+>-]<<[>>+<<-]]++[>]]
+          <<[>+>+<<-]>--[<+>-]++>>>
+        ]<[<<<[-]+++>[-]>[<+>>>+<<-]+>>>]
+      ]<[
+        +[[<]<<[<<]-<->>+>[>>]>[>]<-]+[-<+]<++[[>+<-]++<[<<->>+]<++]<
+        <<<<<<      +> > >+> > >+[
+        <<<               ->+>+>+[
+        <<<<<<<   +>->+> > >->->+[
+        <<<<<         ->+>+> >+>+[
+        <<<<            ->->+>->+[
+        <<<<<<<<+>-> >+> > >->+>+[
+        <<<<<         -> >+> >->+[
+        <<<<            +>->+> >+]]]]]]]
+        +++[[>+<-]<+++]--->>[-[<->-]<++>>]++[[<->-]>>]>[>]
+      ]<
+    ]
+  ]<
+]
+
+[This program plays tic-tac-toe. I've given it the first move. It needs
+interactive i/o, e.g. a command-line brainfuck interpreter or a brainfuck
+compiler that produces command-line executables. At the '>' prompt, enter
+the number of an empty space, followed by a linefeed, to play a move there.]
+
+"""
+
+
 class TestBrainfuck(unittest.TestCase):
     """Represents the Brainfuck test cases."""
 
@@ -79,3 +144,23 @@ class TestBrainfuck(unittest.TestCase):
 
         with self.assertRaises(EsolangExecutionError):
             brainfuck.eval(INFINITE_ASCII_PROGRAM)
+
+    def test_compile(self):
+        """Test the compilation of multiple programs"""
+
+        configuration = BrainfuckConfiguration(
+            enable_memory_wrapping=True,
+            enable_memory_wrapping_protection=True,
+        )
+
+        for program in (
+            HELLO_WORLD_PROGRAM,
+            INFINITE_ASCII_PROGRAM,
+            XMAS_TREE_PROGRAM,
+            TIC_TAC_TOE_PROGRAM,
+        ):
+            destination_filepath = Path("eso_tmp_binary")
+            brainfuck = Brainfuck(configuration)
+            brainfuck.compile(program, destination_filepath)
+
+            os.remove(destination_filepath)
