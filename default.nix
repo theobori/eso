@@ -3,7 +3,6 @@
   buildPythonPackage,
   hatch,
   pytestCheckHook,
-  loguru,
   pydantic,
   distutils,
 }:
@@ -19,7 +18,6 @@ buildPythonPackage {
   ];
 
   dependencies = [
-    loguru
     pydantic
     distutils
   ];

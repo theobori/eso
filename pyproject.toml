@@ -6,7 +6,6 @@ build-backend = "hatchling.build"
 name = "eso"
 version = "0.0.1"
 dependencies = [
-  "loguru",
   "pydantic",
   "distutils",
 ]
@@ -27,7 +26,7 @@ classifiers = [
 ]
 
 [project.scripts]
-statistics = "nixpkgs_lib.scripts.statistics:main"
+eso-brainfuck = "eso.cli.brainfuck:cli_brainfuck"
 
 [project.urls]
 Homepage = "https://github.com/theobori/eso"

@@ -17,7 +17,7 @@ DEFAULT_ARTIFACTS_BASEDIR = "eso_build"
 
 
 def generate_c_code(program: str, configuration: BrainfuckConfiguration) -> str:
-    """_summary_
+    """Generates C code from Brainfuck program.
 
     Args:
         program (str): The Brainfuck program.

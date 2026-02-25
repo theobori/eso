@@ -25,7 +25,7 @@ class BrainfuckInterpreter:
         self.__c = configuration
         self.__metadata = metadata
 
-        self.__memory: List[int] = [self.__c.empty_cell_value] * self.__c.memory_size
+        self.__memory: List[int] = [0] * self.__c.memory_size
         self.__ptr = 0
         self.__pc = 0
         self.__brackets = preprocessing(program)
@@ -54,7 +54,7 @@ class BrainfuckInterpreter:
             if (
                 self.__c.enable_memory_wrapping_protection
                 and has_wrapping
-                and self.__memory[ans] != self.__c.empty_cell_value
+                and self.__memory[ans] != 0
             ):
                 raise EsolangExecutionError(
                     "The pointer points to unfree cell after wrapping", self.__metadata
