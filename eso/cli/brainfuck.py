@@ -1,14 +1,16 @@
 """The Brainfuck CLI module."""
 
-import os
-
 from argparse import ArgumentParser
 from pathlib import Path
+from typing import NoReturn
 
 from eso import Brainfuck, BrainfuckConfiguration
+from eso.cli._helper import cli_esolang_run
 
 
-def cli_brainfuck():
+def cli_brainfuck() -> NoReturn:
+    """Function supposed to be used when creating Python executable scripts."""
+
     parser = ArgumentParser(description="The Brainfuck CLI.")
 
     parser.add_argument(
@@ -59,13 +61,4 @@ def cli_brainfuck():
 
     brainfuck = Brainfuck(configuration)
 
-    with os.fdopen(0) if args.file is None else open(args.file) as f:
-        program = f.read()
-
-    if args.destination_binary is None:
-        brainfuck.eval(program)
-    else:
-        brainfuck.compile(program, args.destination_binary)
-        print(
-            f"The {brainfuck.metadata.name} program has been compiled to {args.destination_binary.absolute()}."
-        )
+    cli_esolang_run(brainfuck, args.file, args.destination_binary)

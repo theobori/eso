@@ -18,12 +18,10 @@ class BrainfuckInterpreter:
         self,
         program: str,
         configuration: BrainfuckConfiguration,
-        metadata: Optional[EsolangMetadata] = None,
     ):
         self.__program = program
         self.__program_len = len(program)
         self.__c = configuration
-        self.__metadata = metadata
 
         self.__memory: List[int] = [0] * self.__c.memory_size
         self.__ptr = 0
@@ -57,7 +55,7 @@ class BrainfuckInterpreter:
                 and self.__memory[ans] != 0
             ):
                 raise EsolangExecutionError(
-                    "The pointer points to unfree cell after wrapping", self.__metadata
+                    "The pointer points to unfree cell after wrapping"
                 )
 
         return ans
@@ -80,7 +78,7 @@ class BrainfuckInterpreter:
         return self.__ptr_move(1, operator.sub)
 
     def eval(self) -> NoReturn:
-        """Evaluates the program without preprocessing"""
+        """Evaluates the program"""
 
         while self.__pc < self.__program_len:
             match self.__program[self.__pc]:

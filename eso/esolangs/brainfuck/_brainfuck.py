@@ -1,3 +1,5 @@
+"""The brainfuck esolang module."""
+
 from pathlib import Path
 from typing import NoReturn, Optional
 
@@ -23,7 +25,7 @@ class Brainfuck(Esolang):
         self.__c = BrainfuckConfiguration() if configuration is None else configuration
 
     def eval(self, program: str) -> NoReturn:
-        interpreter = BrainfuckInterpreter(program, self.__c, self.metadata)
+        interpreter = BrainfuckInterpreter(program, self.__c)
         interpreter.eval()
 
     def compile(self, program: str, destination_filepath: Path) -> NoReturn:
