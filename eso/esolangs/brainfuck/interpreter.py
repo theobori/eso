@@ -3,9 +3,8 @@
 import operator
 import sys
 
-from typing import NoReturn, List, Callable, Optional
+from typing import NoReturn, List, Callable
 
-from eso.esolang import EsolangMetadata
 from eso.esolangs.brainfuck.configuration import BrainfuckConfiguration
 from eso.exceptions import EsolangExecutionError
 from eso.esolangs.brainfuck.preprocessing import preprocessing
@@ -39,24 +38,30 @@ class BrainfuckInterpreter:
             EsolangExecutionError: Throw an error if the wrapping is enabled
             and the pointer points on a unfree cell after wrapping.
 
+            EsolangExecutionError: Throw an error if the wrapping is disabled
+            but wrapping is needed
+
         Returns:
             int: The new pointer value
         """
 
         ans = op(self.__ptr, rhs)
 
-        if self.__c.enable_memory_wrapping:
-            has_wrapping = ans < 0 or ans >= self.__c.memory_size
-            ans = ans % self.__c.memory_size
+        has_wrapping = ans < 0 or ans >= self.__c.memory_size
+        if has_wrapping:
+            if self.__c.enable_memory_wrapping:
+                ans = ans % self.__c.memory_size
 
-            if (
-                self.__c.enable_memory_wrapping_protection
-                and has_wrapping
-                and self.__memory[ans] != 0
-            ):
-                raise EsolangExecutionError(
-                    "The pointer points to unfree cell after wrapping"
-                )
+                if (
+                    self.__c.enable_memory_wrapping_protection
+                    and self.__memory[ans] != 0
+                ):
+                    raise EsolangExecutionError(
+                        "The pointer points to unfree cell after wrapping"
+                    )
+            # handling this because negative indexes are allowed in Python sequences
+            else:
+                raise EsolangExecutionError("Memory wrapping is disabled")
 
         return ans
 

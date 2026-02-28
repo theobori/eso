@@ -1,11 +1,16 @@
 """The Brainfuck CLI module."""
 
-from argparse import ArgumentParser
+import sys
+
+from argparse import ArgumentParser, BooleanOptionalAction
 from pathlib import Path
 from typing import NoReturn
 
+from pydantic import ValidationError
+
 from eso import Brainfuck, BrainfuckConfiguration
 from eso.cli._helper import cli_esolang_run
+from eso.exceptions import EsoError
 
 
 def cli_brainfuck() -> NoReturn:
@@ -16,19 +21,21 @@ def cli_brainfuck() -> NoReturn:
     parser.add_argument(
         "--enable-memory-wrapping",
         required=False,
-        default=None,
+        default=False,
         type=bool,
+        action=BooleanOptionalAction,
     )
     parser.add_argument(
         "--enable-memory-wrapping-protection",
         required=False,
-        default=None,
+        default=False,
         type=bool,
+        action=BooleanOptionalAction,
     )
     parser.add_argument(
         "--memory-size",
         required=False,
-        default=None,
+        default=30_000,
         type=int,
     )
     parser.add_argument(
@@ -48,17 +55,21 @@ def cli_brainfuck() -> NoReturn:
 
     args = parser.parse_args()
 
-    parameters = (
-        "enable_memory_wrapping",
-        "enable_memory_wrapping_protection",
-        "memory_size",
-    )
-
-    configuration = BrainfuckConfiguration()
-    for parameter in parameters:
-        if not getattr(args, parameter, None) is None:
-            setattr(configuration, parameter)
+    configuration: BrainfuckConfiguration
+    try:
+        configuration = BrainfuckConfiguration(
+            enable_memory_wrapping=args.enable_memory_wrapping,
+            enable_memory_wrapping_protection=args.enable_memory_wrapping_protection,
+            memory_size=args.memory_size,
+        )
+    except ValidationError as e:
+        print(e, file=sys.stderr)
+        sys.exit(1)
 
     brainfuck = Brainfuck(configuration)
 
-    cli_esolang_run(brainfuck, args.file, args.destination_binary)
+    try:
+        cli_esolang_run(brainfuck, args.file, args.destination_binary)
+    except EsoError as e:
+        print(e, file=sys.stderr)
+        sys.exit(1)

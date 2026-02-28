@@ -1,17 +1,11 @@
 """The brainfuck compiler module."""
 
-import os
-
 from pathlib import Path
-import shutil
-from uuid import uuid4
-from typing import NoReturn, Optional
-from os.path import dirname
-
-from distutils.ccompiler import new_compiler
+from typing import NoReturn
 
 from eso.esolangs.brainfuck.configuration import BrainfuckConfiguration
 from eso.esolangs.brainfuck.preprocessing import preprocessing
+from eso.esolangs.compile import helper_compile
 
 DEFAULT_ARTIFACTS_BASEDIR = "eso_build"
 
@@ -33,14 +27,18 @@ def generate_c_code(program: str, configuration: BrainfuckConfiguration) -> str:
 #include <stdlib.h>
 
 static unsigned char memory[{configuration.memory_size}];
-static unsigned int ptr = 0;"""
+static int ptr = 0;"""
     ]
 
     if configuration.enable_memory_wrapping:
         code_lines.append(
             f"""static void fix_ptr() {{
 int has_wrapping = (ptr < 0 || ptr >= {configuration.memory_size});
-ptr = ptr % {configuration.memory_size};"""
+if (ptr < 0) {{
+    ptr = {configuration.memory_size} - 1;
+}} else {{
+ptr = ptr % {configuration.memory_size};
+}}"""
         )
 
         if configuration.enable_memory_wrapping_protection:
@@ -100,8 +98,6 @@ def compile(
     program: str,
     destination_filepath: Path,
     configuration: BrainfuckConfiguration,
-    artifacts_basedir: Optional[Path] = DEFAULT_ARTIFACTS_BASEDIR,
-    remove_artifacts: bool = True,
 ) -> NoReturn:
     """Compile the Brainfuck program for your platform using a C compiler.
     I recommend to install gcc and ld if you don't have them on your system.
@@ -110,27 +106,8 @@ def compile(
         program (str): The Brainfuck program.
         destination_filepath (Path): The destination of the executable file.
         configuration (BrainfuckConfiguration): The runtime configuration.
-        artifacts_basedir (Optional[Path], optional): The directory to store artifacts, C and object files. Defaults to DEFAULT_ARTIFACTS_BASEDIR.
-        remove_artifacts (bool, optional): If true, it will remove artifacts produced. Defaults to True.
     """
 
     c_code = generate_c_code(program, configuration)
 
-    os.makedirs(artifacts_basedir, exist_ok=True)
-
-    filepath = Path(artifacts_basedir, str(uuid4()) + ".c")
-
-    with open(filepath, "w") as f:
-        f.write(c_code)
-
-    c_compiler = new_compiler()
-    objs_filepaths = c_compiler.compile([filepath])
-
-    c_compiler.link_executable(
-        objs_filepaths,
-        output_dir=dirname(destination_filepath),
-        output_progname=destination_filepath.name,
-    )
-
-    if remove_artifacts:
-        shutil.rmtree(artifacts_basedir)
+    helper_compile(c_code, destination_filepath)

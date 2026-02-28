@@ -1,11 +1,12 @@
 """The befunge esolang module."""
 
 from pathlib import Path
-from typing import NoReturn
+from typing import NoReturn, Optional
 
 from eso.esolang import Esolang, EsolangMetadata
 from eso.esolangs.befunge.interpreter import BefungeInterpreter
-from eso.exceptions import EsoError
+from eso.esolangs.befunge.compiler import compile
+from eso.esolangs.befunge.configuration import BefungeConfiguration
 
 
 class Befunge(Esolang):
@@ -19,9 +20,12 @@ class Befunge(Esolang):
         author="Chris Pressey",
     )
 
+    def __init__(self, configuration: Optional[BefungeConfiguration] = None):
+        self.__c = BefungeConfiguration() if configuration is None else configuration
+
     def eval(self, program: str) -> NoReturn:
-        interpreter = BefungeInterpreter(program)
+        interpreter = BefungeInterpreter(program, self.__c)
         interpreter.eval()
 
     def compile(self, program: str, destination_filepath: Path) -> NoReturn:
-        raise EsoError(f"The {self.metadata.name} compilation has not been implemented")
+        compile(program, destination_filepath, self.__c)

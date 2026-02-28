@@ -22,6 +22,9 @@ def cli_esolang_run(
         esolang (Esolang): The esoteric language.
         source_file (Optional[Path], optional): The source filepath. Defaults to None.
         destination_binary (Optional[Path], optional): The destination filepath. Defaults to None.
+
+    Raises:
+        e: Propagates runtime error.
     """
 
     with os.fdopen(0) if source_filepath is None else open(source_filepath) as f:
@@ -36,5 +39,4 @@ def cli_esolang_run(
                 f"The {esolang.metadata.name} program has been compiled to {destination_binary.absolute()}."
             )
     except EsoError as e:
-        print(e, file=sys.stderr)
-        sys.exit(1)
+        raise e

@@ -20,7 +20,7 @@ class BrainfuckConfiguration(BaseModel):
     memory_size: int = Field(
         title="The Memory Size",
         description="This is the value of the memory size",
-        lt=1_000_000 + 1,
-        gt=0xFF - 1,
+        le=1_000_000,
+        ge=0xFF,
         default=30_000,
     )

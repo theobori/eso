@@ -8,8 +8,9 @@ from dataclasses import dataclass
 from enum import Enum
 from collections import deque
 
+from eso.esolangs.befunge.configuration import BefungeConfiguration
 from eso.exceptions import EsolangParsingError, EsolangExecutionError
-from eso.esolangs.befunge.const import PROGRAM_MAX_H, PROGRAM_MAX_W
+from eso.esolangs.befunge.const import PROGRAM_H, PROGRAM_W
 
 
 @dataclass
@@ -51,25 +52,26 @@ class BefungeInterpreter:
     def __init__(
         self,
         program: str,
+        configuration: BefungeConfiguration,
     ):
-        self.__program = [[""] * PROGRAM_MAX_W for _ in range(PROGRAM_MAX_H)]
+        self.__c = configuration
+        self.__program = [
+            [""] * self.__c.grid_width for _ in range(self.__c.grid_height)
+        ]
 
         lines = program.splitlines()
-        self.__h = len(lines)
-        if self.__h == 0 or self.__h > PROGRAM_MAX_H:
+
+        h = len(lines)
+        if h == 0 or h > self.__c.grid_height:
             raise EsolangParsingError(
-                f"The height should be between 1 and {PROGRAM_MAX_H}"
+                f"The height should be between 1 and {self.__c.grid_height}"
             )
 
-        self.__w = 0
         for r, line in enumerate(lines):
-            if (w := len(line)) > self.__w:
-                if w > PROGRAM_MAX_W:
-                    raise EsolangParsingError(
-                        f"The width should be between 1 and {PROGRAM_MAX_W}"
-                    )
-
-                self.__w = w
+            if len(line) > self.__c.grid_width:
+                raise EsolangParsingError(
+                    f"The width should be between 1 and {self.__c.grid_width}"
+                )
 
             for c, ch in enumerate(line):
                 self.__program[r][c] = ch
@@ -86,8 +88,8 @@ class BefungeInterpreter:
             direction (Direction): The direction to go.
         """
 
-        self.__pc.r = (self.__pc.r + direction.value[0]) % self.__h
-        self.__pc.c = (self.__pc.c + direction.value[1]) % self.__w
+        self.__pc.r = (self.__pc.r + direction.value[0]) % self.__c.grid_height
+        self.__pc.c = (self.__pc.c + direction.value[1]) % self.__c.grid_width
 
     def peek_command(self) -> str:
         """Peek the current command needed to be evaluated.
@@ -173,7 +175,12 @@ class BefungeInterpreter:
                 print(chr(v), end="")
             case "g":
                 r, c = self.__st.pop(), self.__st.pop()
-                if r < 0 or r >= self.__h or c < 0 or c >= self.__w:
+                if (
+                    r < 0
+                    or r >= self.__c.grid_height
+                    or c < 0
+                    or c >= self.__c.grid_width
+                ):
                     self.__st.append(0)
                 else:
                     self.__st.append(ord(self.__program[r][c]))
