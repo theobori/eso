@@ -247,7 +247,10 @@ def generate_c_code(program: str, configuration: BefungeConfiguration) -> str:
         .replace("{{grid}}", grid_c_str)
         .replace("{{grid_height}}", str(configuration.grid_height))
         .replace("{{grid_width}}", str(configuration.grid_width))
-        .replace("{{stack_bytes_size}}", str(configuration.stack_bytes_size))
+        # Divide by 4 because each element of the stack is a signed long int.
+        # Refering to https://learn.microsoft.com/en-us/cpp/cpp/data-type-ranges?view=msvc-170,
+        # a signed long int has a size of 4 bytes.
+        .replace("{{stack_bytes_size}}", str(configuration.stack_bytes_size // 4))
     )
 
     return c_code

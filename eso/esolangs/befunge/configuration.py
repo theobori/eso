@@ -13,17 +13,20 @@ class BefungeConfiguration(BaseModel):
         title="The Grid Width",
         description="This is the value of the grid width",
         ge=PROGRAM_W,
+        le=200,
         default=PROGRAM_W,
     )
     grid_height: int = Field(
         title="The Grid Height",
         description="This is the value of the grid height",
         ge=PROGRAM_H,
+        le=200,
         default=PROGRAM_H,
     )
     stack_bytes_size: int = Field(
         title="The Stack Bytes Size",
         description="This is the value of the stack bytes size for the generated C code",
         ge=256,
-        default=256 * 256 * 8,
+        le=131072,  # 128KB
+        default=32768,  # 32KB
     )
