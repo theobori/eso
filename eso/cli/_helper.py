@@ -1,7 +1,6 @@
 """The helper CLI module"""
 
 import os
-import sys
 
 from pathlib import Path
 from typing import NoReturn, Optional
@@ -14,6 +13,7 @@ def cli_esolang_run(
     esolang: Esolang,
     source_filepath: Optional[Path] = None,
     destination_binary: Optional[Path] = None,
+    open_text_mode: str = "r",
 ) -> NoReturn:
     """Helper for running the evaluation or the compilation of the program with
     a given Esolang object.
@@ -27,7 +27,11 @@ def cli_esolang_run(
         e: Propagates runtime error.
     """
 
-    with os.fdopen(0) if source_filepath is None else open(source_filepath) as f:
+    with (
+        os.fdopen(0, mode=open_text_mode)
+        if source_filepath is None
+        else open(source_filepath, mode=open_text_mode)
+    ) as f:
         program = f.read()
 
     try:

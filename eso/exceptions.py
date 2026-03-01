@@ -2,8 +2,6 @@
 
 from typing import Optional
 
-from eso.metadata import EsolangMetadata
-
 
 class EsoError(Exception):
     """Eso base error."""

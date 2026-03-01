@@ -4,7 +4,7 @@
 
 [![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
 
-This GitHub repository is a fun Python project, the aim is simply to write interpreters and compilers for esoteric programming languages. The project exposes a library and CLI for each language, each with language-specific parameters for runtime.
+This GitHub repository is a fun Python project, the aim is simply to write interpreters and compilers for esoteric programming languages I like. The project exposes a library and CLI for each language, each with language-specific parameters for runtime.
 
 ## Definition
 

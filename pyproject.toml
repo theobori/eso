@@ -28,6 +28,7 @@ classifiers = [
 [project.scripts]
 eso-brainfuck = "eso.cli.brainfuck:cli_brainfuck"
 eso-befunge = "eso.cli.befunge:cli_befunge"
+eso-brainz = "eso.cli.brainz:cli_brainz"
 
 [project.urls]
 Homepage = "https://github.com/theobori/eso"

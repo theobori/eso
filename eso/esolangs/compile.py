@@ -19,8 +19,8 @@ def helper_compile(
     artifacts_basedir: Optional[Path] = DEFAULT_ARTIFACTS_BASEDIR,
     remove_artifacts: bool = True,
 ) -> NoReturn:
-    """Compile the befunge program for your platform using a C compiler.
-    I recommend to install gcc and ld if you don't have them on your system.
+    """Helper function to compile a C code to an executable file.
+    The C code must have a (main function)/(_start symbol).
 
     Args:
         c_code (str): The C code to compile.
