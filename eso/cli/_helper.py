@@ -1,5 +1,6 @@
 """The helper CLI module"""
 
+from argparse import ArgumentParser
 import os
 
 from pathlib import Path
@@ -7,6 +8,38 @@ from typing import NoReturn, Optional
 
 from eso.esolang import Esolang
 from eso.exceptions import EsoError
+
+
+def cli_create_base_parser(description: Optional[str] = None) -> ArgumentParser:
+    """Returns a basic CLI argument parser, common to every Python executable script.
+
+    Args:
+        description (Optional[str], optional): A parser description. Defaults to None.
+
+    Returns:
+        ArgumentParser: The parser object.
+    """
+
+    parser = ArgumentParser()
+    if description:
+        parser.description = description
+
+    parser.add_argument(
+        "-f",
+        "--file",
+        required=False,
+        default=None,
+        type=Path,
+    )
+    parser.add_argument(
+        "-o",
+        "--destination-binary",
+        required=False,
+        default=None,
+        type=Path,
+    )
+
+    return parser
 
 
 def cli_esolang_run(

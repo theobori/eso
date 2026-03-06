@@ -1,6 +1,6 @@
 """The brainz module."""
 
-from eso.esolangs.brainz._brainz import Brainz
+from eso.esolangs.brainz.brainz import Brainz
 
 __all__ = [
     "Brainz",

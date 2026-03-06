@@ -3,13 +3,12 @@
 import sys
 
 from typing import NoReturn
-from argparse import ArgumentParser
-from pathlib import Path
 
+from eso.metadata import get_metadata_sentence
 from pydantic import ValidationError
 
 from eso import Befunge
-from eso.cli._helper import cli_esolang_run
+from eso.cli._helper import cli_create_base_parser, cli_esolang_run
 from eso.esolangs.befunge.configuration import BefungeConfiguration
 from eso.esolangs.befunge.const import PROGRAM_H, PROGRAM_W
 from eso.exceptions import EsoError
@@ -18,22 +17,8 @@ from eso.exceptions import EsoError
 def cli_befunge() -> NoReturn:
     """Function supposed to be used when creating Python executable scripts."""
 
-    parser = ArgumentParser(description="The Befunge CLI.")
-
-    parser.add_argument(
-        "-f",
-        "--file",
-        required=False,
-        default=None,
-        type=Path,
-    )
-    parser.add_argument(
-        "-o",
-        "--destination-binary",
-        required=False,
-        default=None,
-        type=Path,
-    )
+    description = get_metadata_sentence(Befunge.metadata)
+    parser = cli_create_base_parser(description)
     parser.add_argument(
         "--grid-width",
         required=False,
@@ -54,12 +39,6 @@ def cli_befunge() -> NoReturn:
     )
 
     args = parser.parse_args()
-
-    parameters = (
-        "grid_width",
-        "grid_height",
-        "stack_bytes_size",
-    )
 
     configuration: BefungeConfiguration
     try:

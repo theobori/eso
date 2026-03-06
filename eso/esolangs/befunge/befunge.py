@@ -14,8 +14,8 @@ class Befunge(Esolang):
 
     metadata = EsolangMetadata(
         name="Befunge",
-        description="Befunge is a two-dimensional esoteric programming language"
-        "The goal is to be as difficult to compile as possible",
+        description="Befunge is a two-dimensional esoteric programming language."
+        " The goal is to be as difficult to compile as possible.",
         year=1993,
         author="Chris Pressey",
     )

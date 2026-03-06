@@ -3,6 +3,7 @@
 from eso.esolangs.brainfuck import Brainfuck, BrainfuckConfiguration
 from eso.esolangs.befunge import Befunge, BefungeConfiguration
 from eso.esolangs.brainz import Brainz
+from eso.esolangs.aaa import AAA
 
 __all__ = [
     "Brainfuck",
@@ -10,4 +11,5 @@ __all__ = [
     "Befunge",
     "BefungeConfiguration",
     "Brainz",
+    "AAA",
 ]

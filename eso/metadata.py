@@ -22,4 +22,22 @@ class EsolangMetadata(BaseModel):
     author: str = Field(
         title="The Author Name",
         description="This is the value of the esoteric language author name",
+        default="Unknown",
+    )
+
+
+def get_metadata_sentence(metadata: EsolangMetadata) -> str:
+    """Returns a sentence from the esolang metadata.
+
+    Args:
+        metadata (EsolangMetadata): The esolang metadata.
+
+    Returns:
+        str: The sentence.
+    """
+
+    return (
+        f"The '{metadata.name}' esoteric programming language."
+        + f" {metadata.description}"
+        + f" It has been created in {metadata.year} by {metadata.author}."
     )

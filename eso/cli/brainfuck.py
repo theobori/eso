@@ -2,22 +2,22 @@
 
 import sys
 
-from argparse import ArgumentParser, BooleanOptionalAction
-from pathlib import Path
+from argparse import BooleanOptionalAction
 from typing import NoReturn
 
+from eso.metadata import get_metadata_sentence
 from pydantic import ValidationError
 
 from eso import Brainfuck, BrainfuckConfiguration
-from eso.cli._helper import cli_esolang_run
+from eso.cli._helper import cli_create_base_parser, cli_esolang_run
 from eso.exceptions import EsoError
 
 
 def cli_brainfuck() -> NoReturn:
     """Function supposed to be used when creating Python executable scripts."""
 
-    parser = ArgumentParser(description="The Brainfuck CLI.")
-
+    description = get_metadata_sentence(Brainfuck.metadata)
+    parser = cli_create_base_parser(description)
     parser.add_argument(
         "--enable-memory-wrapping",
         required=False,
@@ -37,20 +37,6 @@ def cli_brainfuck() -> NoReturn:
         required=False,
         default=30_000,
         type=int,
-    )
-    parser.add_argument(
-        "-f",
-        "--file",
-        required=False,
-        default=None,
-        type=Path,
-    )
-    parser.add_argument(
-        "-o",
-        "--destination-binary",
-        required=False,
-        default=None,
-        type=Path,
     )
 
     args = parser.parse_args()

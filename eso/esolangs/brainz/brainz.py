@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import NoReturn
 
 from eso.esolang import Esolang, EsolangMetadata
-from eso.esolangs.brainfuck._brainfuck import Brainfuck
+from eso.esolangs.brainfuck.brainfuck import Brainfuck
 from eso.esolangs.brainfuck.configuration import BrainfuckConfiguration
 from eso.exceptions import EsolangParsingError
 

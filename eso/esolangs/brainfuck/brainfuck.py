@@ -22,11 +22,11 @@ class Brainfuck(Esolang):
     )
 
     def __init__(self, configuration: Optional[BrainfuckConfiguration] = None):
-        self.__c = BrainfuckConfiguration() if configuration is None else configuration
+        self._c = BrainfuckConfiguration() if configuration is None else configuration
 
     def eval(self, program: str) -> NoReturn:
-        interpreter = BrainfuckInterpreter(program, self.__c)
+        interpreter = BrainfuckInterpreter(program, self._c)
         interpreter.eval()
 
     def compile(self, program: str, destination_filepath: Path) -> NoReturn:
-        compile(program, destination_filepath, self.__c)
+        compile(program, destination_filepath, self._c)

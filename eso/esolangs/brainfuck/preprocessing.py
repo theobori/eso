@@ -3,12 +3,17 @@
 from collections import deque
 from typing import Dict
 
+from eso.exceptions import EsolangParsingError
+
 
 def preprocessing(program: str) -> Dict[int, int]:
     """Preprocessing the matching brackets positions
 
     Args:
         program (str): The Brainfuck program.
+
+    Raises:
+        EsolangParsingError: Error if unmatched brackets
 
     Returns:
         Dict[int, int]: The Python dictionnary containing jump positions.
@@ -26,5 +31,8 @@ def preprocessing(program: str) -> Dict[int, int]:
                     l = st.pop()
                     ans[l] = i
                     ans[i] = l
+
+    if st:
+        raise EsolangParsingError("There are unmatched brackets")
 
     return ans
