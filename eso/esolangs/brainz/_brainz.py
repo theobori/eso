@@ -30,6 +30,8 @@ class Brainz(Esolang):
         ",",
     )
 
+    zeroes_max = len(zeroes_before_one) - 1
+
     brainfuck_configuration = BrainfuckConfiguration(
         enable_memory_wrapping=True,
     )
@@ -55,7 +57,7 @@ class Brainz(Esolang):
             for bit in range(8):
                 left_bit = (byte >> (7 - bit)) & 1
                 if left_bit == 1:
-                    if zeroes > 7:
+                    if zeroes > Brainz.zeroes_max:
                         raise EsolangParsingError(
                             f"Too many zeroes before this one at position {i * 8 + bit}"
                         )

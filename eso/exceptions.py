@@ -23,3 +23,13 @@ class EsolangParsingError(EsolangError):
 
 class EsolangExecutionError(EsolangError):
     """Esolang execution error."""
+
+
+class EsolangNotImplementedError(EsoError):
+    """Esolang base error."""
+
+    def __init__(self, lang_name: str):
+        self.__lang_name = lang_name
+
+    def __str__(self) -> str:
+        return f"The {self.__lang_name} implementation has no compiler."

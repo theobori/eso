@@ -10,7 +10,6 @@ from collections import deque
 
 from eso.esolangs.befunge.configuration import BefungeConfiguration
 from eso.exceptions import EsolangParsingError, EsolangExecutionError
-from eso.esolangs.befunge.const import PROGRAM_H, PROGRAM_W
 
 
 @dataclass
@@ -91,7 +90,7 @@ class BefungeInterpreter:
         self.__pc.r = (self.__pc.r + direction.value[0]) % self.__c.grid_height
         self.__pc.c = (self.__pc.c + direction.value[1]) % self.__c.grid_width
 
-    def peek_command(self) -> str:
+    def __peek_command(self) -> str:
         """Peek the current command needed to be evaluated.
 
         Returns:
@@ -206,7 +205,7 @@ class BefungeInterpreter:
         """Evaluates the program without preprocessing"""
 
         while True:
-            command = self.peek_command()
+            command = self.__peek_command()
 
             if command == '"':
                 self.__is_stringmode = not self.__is_stringmode

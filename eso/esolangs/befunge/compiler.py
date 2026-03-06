@@ -4,7 +4,6 @@ from pathlib import Path
 from typing import NoReturn
 
 from eso.esolangs.befunge.configuration import BefungeConfiguration
-from eso.esolangs.befunge.const import PROGRAM_H, PROGRAM_W
 from eso.esolangs.compile import helper_compile
 from eso.exceptions import EsolangParsingError
 
