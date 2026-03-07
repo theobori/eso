@@ -5,6 +5,7 @@ from eso.esolangs.befunge import Befunge, BefungeConfiguration
 from eso.esolangs.brainz import Brainz
 from eso.esolangs.aaa import AAA
 from eso.esolangs.pikalang import Pikalang
+from eso.esolangs.lazyfuck import Lazyfuck
 
 __all__ = [
     "Brainfuck",
@@ -14,4 +15,5 @@ __all__ = [
     "Brainz",
     "AAA",
     "Pikalang",
+    "Lazyfuck",
 ]
