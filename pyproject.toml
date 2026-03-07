@@ -34,6 +34,7 @@ eso-pikalang = "eso.cli.pikalang:cli_pikalang"
 eso-lazyfuck = "eso.cli.lazyfuck:cli_lazyfuck"
 eso-detailedfuck = "eso.cli.detailedfuck:cli_detailedfuck"
 eso-omam = "eso.cli.omam:cli_omam"
+eso-roadrunner = "eso.cli.roadrunner:cli_roadrunner"
 
 [project.urls]
 Homepage = "https://github.com/theobori/eso"
