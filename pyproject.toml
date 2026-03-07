@@ -30,6 +30,7 @@ eso-brainfuck = "eso.cli.brainfuck:cli_brainfuck"
 eso-befunge = "eso.cli.befunge:cli_befunge"
 eso-brainz = "eso.cli.brainz:cli_brainz"
 eso-aaa = "eso.cli.aaa:cli_aaa"
+eso-pikalang = "eso.cli.pikalang:cli_pikalang"
 
 [project.urls]
 Homepage = "https://github.com/theobori/eso"

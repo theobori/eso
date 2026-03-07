@@ -13,6 +13,7 @@ class EsolangMetadata(BaseModel):
     description: str = Field(
         title="The Description",
         description="This is the value of the esoteric language description",
+        default="description.",
     )
     year: int = Field(
         title="The Creation Year",
