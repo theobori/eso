@@ -1,4 +1,4 @@
-"""The aaa esolang module."""
+"""The pikalang esolang module."""
 
 from eso.esolang import EsolangMetadata
 from eso.esolangs.brainfuck.brainfuck_like import BrainfuckLike

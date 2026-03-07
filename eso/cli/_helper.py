@@ -1,13 +1,15 @@
 """The helper CLI module"""
 
-from argparse import ArgumentParser
+import sys
 import os
 
+from argparse import ArgumentParser
 from pathlib import Path
-from typing import NoReturn, Optional
+from typing import Callable, NoReturn, Optional, Type
 
 from eso.esolang import Esolang
 from eso.exceptions import EsoError
+from eso.metadata import get_metadata_sentence
 
 
 def cli_create_base_parser(description: Optional[str] = None) -> ArgumentParser:
@@ -42,6 +44,43 @@ def cli_create_base_parser(description: Optional[str] = None) -> ArgumentParser:
     return parser
 
 
+def cli_generic(
+    esolang_class: Type[Esolang],
+    open_text_mode: str = "r",
+) -> NoReturn:
+    """The generic CLI function.
+
+    Args:
+        esolang_class (Type[Esolang]): Class types that implements the Esolang interface.
+        open_text_mode (str, optional): The file open mode. Defaults to "r".
+    """
+
+    description = get_metadata_sentence(esolang_class.metadata)
+    parser = cli_create_base_parser(description)
+    args = parser.parse_args()
+
+    esolang_obj = esolang_class()
+
+    try:
+        cli_esolang_run(esolang_obj, args.file, args.destination_binary, open_text_mode)
+    except EsoError as e:
+        print(e, file=sys.stderr)
+        sys.exit(1)
+
+
+def cli_create_generic_func(esolang_class: Type[Esolang]) -> Callable:
+    """Returns a CLI function.
+
+    Args:
+        esolang_class (Type[Esolang]): Class types that implements the Esolang interface.
+
+    Returns:
+        Callable: The CLI function.
+    """
+
+    return lambda: cli_generic(esolang_class)
+
+
 def cli_esolang_run(
     esolang: Esolang,
     source_filepath: Optional[Path] = None,
@@ -55,6 +94,7 @@ def cli_esolang_run(
         esolang (Esolang): The esoteric language.
         source_file (Optional[Path], optional): The source filepath. Defaults to None.
         destination_binary (Optional[Path], optional): The destination filepath. Defaults to None.
+        open_text_mode (str, optional): The file open mode. Defaults to "r".
 
     Raises:
         e: Propagates runtime error.

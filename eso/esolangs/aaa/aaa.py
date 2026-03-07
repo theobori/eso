@@ -2,7 +2,7 @@
 
 from eso.esolang import EsolangMetadata
 from eso.esolangs.brainfuck.brainfuck_like import BrainfuckLike
-from eso._common import remove_parenthesis_content
+from eso.transform import remove_parenthesis_content
 
 
 class AAA(BrainfuckLike):

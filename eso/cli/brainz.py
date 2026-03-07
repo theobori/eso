@@ -1,26 +1,12 @@
 """The brainz CLI module."""
 
-import sys
-
 from typing import NoReturn
 
 from eso import Brainz
-from eso.cli._helper import cli_create_base_parser, cli_esolang_run
-from eso.exceptions import EsoError
-from eso.metadata import get_metadata_sentence
+from eso.cli._helper import cli_generic
 
 
 def cli_brainz() -> NoReturn:
     """Function supposed to be used when creating Python executable scripts."""
 
-    description = get_metadata_sentence(Brainz.metadata)
-    parser = cli_create_base_parser(description)
-    args = parser.parse_args()
-
-    brainz = Brainz()
-
-    try:
-        cli_esolang_run(brainz, args.file, args.destination_binary, "rb")
-    except EsoError as e:
-        print(e, file=sys.stderr)
-        sys.exit(1)
+    cli_generic(Brainz, "rb")

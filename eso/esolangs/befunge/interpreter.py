@@ -10,6 +10,7 @@ from collections import deque
 
 from eso.esolangs.befunge.configuration import BefungeConfiguration
 from eso.exceptions import EsolangParsingError, EsolangExecutionError
+from eso.getch import getche
 
 
 @dataclass
@@ -195,7 +196,7 @@ class BefungeInterpreter:
 
                 self.__st.append(int(user_input))
             case "~":
-                self.__st.append(ord(sys.stdin.read(1)))
+                self.__st.append(ord(getche()))
             case "#":
                 self.__update_pc(self.__direction)
             case "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9":

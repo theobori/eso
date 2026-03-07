@@ -8,6 +8,7 @@ from typing import NoReturn, List, Callable
 from eso.esolangs.brainfuck.configuration import BrainfuckConfiguration
 from eso.exceptions import EsolangExecutionError
 from eso.esolangs.brainfuck.preprocessing import preprocessing
+from eso.getch import getche
 
 
 class BrainfuckInterpreter:
@@ -98,7 +99,7 @@ class BrainfuckInterpreter:
                 case ".":
                     print(chr(self.__memory[self.__ptr]), end="")
                 case ",":
-                    ch = ord(sys.stdin.read(1))
+                    ch = ord(getche())
                     self.__memory[self.__ptr] = 0 if ch == 10 else ch
                 case "[":
                     if self.__memory[self.__ptr] == 0:
