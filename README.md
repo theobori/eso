@@ -4,11 +4,13 @@
 
 [![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
 
-This GitHub repository is a fun Python project, the aim is simply to write interpreters and compilers for esoteric programming languages I like. The project exposes a library and CLI for each language, each with language-specific parameters for runtime.
+This GitHub repository is a fun KISS Python project, the aim is simply to write interpreters and compilers for esoteric programming languages I like. The project exposes a library and CLI for each language, each with language-specific parameters for runtime. Each esoteric programming languages has its own CLI.
 
 ## Definition
 
 An esoteric programming language is a computer programming language designed to experiment with weird ideas, to be hard to program in, or as a joke, rather than for practical use. 
+
+
 
 ## Contribute
 
