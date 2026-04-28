@@ -16,7 +16,7 @@ DEFAULT_ARTIFACTS_BASEDIR = "eso_build"
 def helper_compile(
     c_code: str,
     destination_filepath: Path,
-    artifacts_basedir: Optional[Path] = DEFAULT_ARTIFACTS_BASEDIR,
+    artifacts_basedir: Optional[Path] = None,
     remove_artifacts: bool = True,
 ) -> NoReturn:
     """Helper function to compile a C code to an executable file.
@@ -28,6 +28,9 @@ def helper_compile(
         artifacts_basedir (Optional[Path], optional): The directory to store artifacts, C and object files. Defaults to DEFAULT_ARTIFACTS_BASEDIR.
         remove_artifacts (bool, optional): If true, it will remove artifacts produced. Defaults to True.
     """
+
+    if artifacts_basedir is None:
+        artifacts_basedir = Path(DEFAULT_ARTIFACTS_BASEDIR)
 
     os.makedirs(artifacts_basedir, exist_ok=True)
 
