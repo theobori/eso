@@ -6,7 +6,7 @@ from eso import Brainz
 from eso.cli._helper import cli_generic
 
 
-def cli_brainz() -> NoReturn:
+def cli_brainz() -> NoReturn | None:
     """Function supposed to be used when creating Python executable scripts."""
 
     cli_generic(Brainz, "rb")

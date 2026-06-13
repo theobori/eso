@@ -14,7 +14,7 @@ from eso.esolangs.befunge.const import PROGRAM_H, PROGRAM_W
 from eso.exceptions import EsoError
 
 
-def cli_befunge() -> NoReturn:
+def cli_befunge() -> NoReturn | None:
     """Function supposed to be used when creating Python executable scripts."""
 
     description = get_metadata_sentence(Befunge.metadata)

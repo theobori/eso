@@ -6,7 +6,7 @@ from eso import Lazyfuck
 from eso.cli._helper import cli_generic
 
 
-def cli_lazyfuck() -> NoReturn:
+def cli_lazyfuck() -> NoReturn | None:
     """Function supposed to be used when creating Python executable scripts."""
 
     cli_generic(Lazyfuck)

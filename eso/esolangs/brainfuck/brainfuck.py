@@ -1,7 +1,7 @@
 """The brainfuck esolang module."""
 
 from pathlib import Path
-from typing import NoReturn, Optional
+from typing import Optional
 
 from eso.esolang import Esolang, EsolangMetadata
 from eso.esolangs.brainfuck.configuration import BrainfuckConfiguration
@@ -24,9 +24,9 @@ class Brainfuck(Esolang):
     def __init__(self, configuration: Optional[BrainfuckConfiguration] = None):
         self._c = BrainfuckConfiguration() if configuration is None else configuration
 
-    def eval(self, program: str) -> NoReturn:
+    def eval(self, program: str) -> None:
         interpreter = BrainfuckInterpreter(program, self._c)
         interpreter.eval()
 
-    def compile(self, program: str, destination_filepath: Path) -> NoReturn:
+    def compile(self, program: str, destination_filepath: Path) -> None:
         compile(program, destination_filepath, self._c)

@@ -1,6 +1,5 @@
 """The esolang module."""
 
-from typing import NoReturn
 from abc import ABC, abstractmethod
 from pathlib import Path
 
@@ -13,7 +12,7 @@ class Esolang(ABC):
     metadata: EsolangMetadata
 
     @abstractmethod
-    def eval(self, program: str) -> NoReturn:
+    def eval(self, program: str) -> None:
         """Evaluates the given program.
 
         Args:
@@ -21,7 +20,7 @@ class Esolang(ABC):
         """
 
     @abstractmethod
-    def compile(self, program: str, destination_filepath: Path) -> NoReturn:
+    def compile(self, program: str, destination_filepath: Path) -> None:
         """Compiles the given program.
 
         Args:

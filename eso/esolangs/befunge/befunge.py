@@ -1,7 +1,7 @@
 """The befunge esolang module."""
 
 from pathlib import Path
-from typing import NoReturn, Optional
+from typing import Optional
 
 from eso.esolang import Esolang, EsolangMetadata
 from eso.esolangs.befunge.interpreter import BefungeInterpreter
@@ -23,9 +23,9 @@ class Befunge(Esolang):
     def __init__(self, configuration: Optional[BefungeConfiguration] = None):
         self.__c = BefungeConfiguration() if configuration is None else configuration
 
-    def eval(self, program: str) -> NoReturn:
+    def eval(self, program: str) -> None:
         interpreter = BefungeInterpreter(program, self.__c)
         interpreter.eval()
 
-    def compile(self, program: str, destination_filepath: Path) -> NoReturn:
+    def compile(self, program: str, destination_filepath: Path) -> None:
         compile(program, destination_filepath, self.__c)

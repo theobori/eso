@@ -6,7 +6,7 @@ from eso import Omam
 from eso.cli._helper import cli_generic
 
 
-def cli_omam() -> NoReturn:
+def cli_omam() -> NoReturn | None:
     """Function supposed to be used when creating Python executable scripts."""
 
     cli_generic(Omam)

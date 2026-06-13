@@ -13,7 +13,7 @@ from eso.cli._helper import cli_create_base_parser, cli_esolang_run
 from eso.exceptions import EsoError
 
 
-def cli_brainfuck() -> NoReturn:
+def cli_brainfuck() -> NoReturn | None:
     """Function supposed to be used when creating Python executable scripts."""
 
     description = get_metadata_sentence(Brainfuck.metadata)

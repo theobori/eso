@@ -1,9 +1,8 @@
 """The brainfuck interpreter module."""
 
 import operator
-import sys
 
-from typing import NoReturn, List, Callable
+from typing import List, Callable
 
 from eso.esolangs.brainfuck.configuration import BrainfuckConfiguration
 from eso.exceptions import EsolangExecutionError
@@ -83,7 +82,7 @@ class BrainfuckInterpreter:
         """
         return self.__ptr_move(1, operator.sub)
 
-    def eval(self) -> NoReturn:
+    def eval(self) -> None:
         """Evaluates the program"""
 
         while self.__pc < self.__program_len:

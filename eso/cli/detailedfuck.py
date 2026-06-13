@@ -6,7 +6,7 @@ from eso import DetailedFuck
 from eso.cli._helper import cli_generic
 
 
-def cli_detailedfuck() -> NoReturn:
+def cli_detailedfuck() -> NoReturn | None:
     """Function supposed to be used when creating Python executable scripts."""
 
     cli_generic(DetailedFuck)

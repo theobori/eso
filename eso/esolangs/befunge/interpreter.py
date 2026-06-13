@@ -3,7 +3,6 @@
 import random
 import sys
 
-from typing import NoReturn
 from dataclasses import dataclass
 from enum import Enum
 from collections import deque
@@ -81,7 +80,7 @@ class BefungeInterpreter:
         self.__st = BefungeStack()
         self.__is_stringmode = False
 
-    def __update_pc(self, direction: Direction) -> NoReturn:
+    def __update_pc(self, direction: Direction) -> None:
         """Update the program counter.
 
         Args:
@@ -100,7 +99,7 @@ class BefungeInterpreter:
 
         return self.__program[self.__pc.r][self.__pc.c]
 
-    def __eval_command(self, command: str) -> NoReturn:
+    def __eval_command(self, command: str) -> None:
         """Evaluates the given command.
 
         Args:
@@ -202,7 +201,7 @@ class BefungeInterpreter:
             case "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9":
                 self.__st.append(int(command))
 
-    def eval(self) -> NoReturn:
+    def eval(self) -> None:
         """Evaluates the program without preprocessing"""
 
         while True:

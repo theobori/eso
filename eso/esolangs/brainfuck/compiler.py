@@ -1,7 +1,6 @@
 """The brainfuck compiler module."""
 
 from pathlib import Path
-from typing import NoReturn
 
 from eso.esolangs.brainfuck.configuration import BrainfuckConfiguration
 from eso.esolangs.brainfuck.preprocessing import preprocessing
@@ -98,7 +97,7 @@ def compile(
     program: str,
     destination_filepath: Path,
     configuration: BrainfuckConfiguration,
-) -> NoReturn:
+) -> None:
     """Compile the Brainfuck program for your platform using a C compiler.
     I recommend to install gcc and ld if you don't have them on your system.
 

@@ -1,7 +1,6 @@
 """The brainz esolang module."""
 
 from pathlib import Path
-from typing import NoReturn
 
 from eso.esolang import Esolang, EsolangMetadata
 from eso.esolangs.brainfuck.brainfuck import Brainfuck
@@ -106,13 +105,13 @@ class Brainz(Esolang):
 
         return bytes(ans)
 
-    def eval(self, program: bytes) -> NoReturn:
+    def eval(self, program: bytes) -> None:
         brainfuck_program = self.decode(program)
         brainfuck = Brainfuck(self.brainfuck_configuration)
 
         brainfuck.eval(brainfuck_program)
 
-    def compile(self, program: bytes, destination_filepath: Path) -> NoReturn:
+    def compile(self, program: bytes, destination_filepath: Path) -> None:
         brainfuck_program = self.decode(program)
         brainfuck = Brainfuck(self.brainfuck_configuration)
 

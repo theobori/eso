@@ -47,7 +47,7 @@ def cli_create_base_parser(description: Optional[str] = None) -> ArgumentParser:
 def cli_generic(
     esolang_class: Type[Esolang],
     open_text_mode: str = "r",
-) -> NoReturn:
+) -> NoReturn | None:
     """The generic CLI function.
 
     Args:
@@ -86,7 +86,7 @@ def cli_esolang_run(
     source_filepath: Optional[Path] = None,
     destination_binary: Optional[Path] = None,
     open_text_mode: str = "r",
-) -> NoReturn:
+) -> None:
     """Helper for running the evaluation or the compilation of the program with
     a given Esolang object.
 

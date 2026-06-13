@@ -1,7 +1,6 @@
 """The befunge compiler module."""
 
 from pathlib import Path
-from typing import NoReturn
 
 from eso.esolangs.befunge.configuration import BefungeConfiguration
 from eso.esolangs.compile import helper_compile
@@ -259,7 +258,7 @@ def compile(
     program: str,
     destination_filepath: Path,
     configuration: BefungeConfiguration,
-) -> NoReturn:
+) -> None:
     """Compile the befunge program for your platform using a C compiler.
     I recommend to install gcc and ld if you don't have them on your system.
 

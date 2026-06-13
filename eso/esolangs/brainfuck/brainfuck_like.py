@@ -1,7 +1,7 @@
 """The brainfuck like module."""
 
 from pathlib import Path
-from typing import Dict, NoReturn, Optional
+from typing import Dict, Optional
 
 from eso.esolangs.brainfuck.brainfuck import Brainfuck
 from eso.esolangs.brainfuck.configuration import BrainfuckConfiguration
@@ -65,12 +65,12 @@ class BrainfuckLike(Brainfuck):
 
         return program
 
-    def eval(self, program: str) -> NoReturn:
+    def eval(self, program: str) -> None:
         brainfuck_program = self.decode(self.pre_decode(program))
 
         super().eval(brainfuck_program)
 
-    def compile(self, program: str, destination_filepath: Path) -> NoReturn:
+    def compile(self, program: str, destination_filepath: Path) -> None:
         brainfuck_program = self.decode(self.pre_decode(program))
 
         super().compile(brainfuck_program, destination_filepath)

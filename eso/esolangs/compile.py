@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 import shutil
 from uuid import uuid4
-from typing import NoReturn, Optional
+from typing import Optional
 from os.path import dirname
 
 from distutils.ccompiler import new_compiler
@@ -18,7 +18,7 @@ def helper_compile(
     destination_filepath: Path,
     artifacts_basedir: Optional[Path] = None,
     remove_artifacts: bool = True,
-) -> NoReturn:
+) -> None:
     """Helper function to compile a C code to an executable file.
     The C code must have a (main function)/(_start symbol).
 
